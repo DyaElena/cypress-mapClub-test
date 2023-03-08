@@ -2,10 +2,10 @@ const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
   e2e: {
-    baseUrl: "https://account.sainsburys.co.uk/",
+    baseUrl: "https://www.bother.com",
     experimentalStudio: true,
     setupNodeEvents(on, config) {},
     specPattern: "cypress/**/*.spec.{js,jsx,ts,tsx}",
   },
-  defaultCommandTimeout: 10000,
+  defaultCommandTimeout: 30000,
 });
