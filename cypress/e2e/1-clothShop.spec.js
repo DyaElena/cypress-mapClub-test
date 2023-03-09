@@ -85,7 +85,7 @@ describe("Place order tests", () => {
 
   // })
 
-  it.only("verify selection of different colors of a product", () => {
+  it("verify selection of different colors of a product", () => {
     cy.get('[title="FOR HER"]').click();
     cy.get("h4").contains("Clothing").click();
     cy.contains("Double Breasted Trench Coat").click();
@@ -109,5 +109,23 @@ describe("Place order tests", () => {
       .then(() => {
         cy.get(".size-con").find("span").should("contain", "Navi");
       });
+  });
+
+  it.only("verify available and unavailable sizes", () => {
+    cy.get('[title="FOR HER"]').click();
+    cy.get("h4").contains("Clothing").click();
+    cy.contains("Double Breasted Trench Coat").click();
+    cy.get("#pcSizeList").each((index, size) => {
+      if (Cypress.$(size).hasClass("is-disabled")) {
+        cy.get("#product-quantity").invoke("text").should("be.eq", 0);
+
+        cy.get(".not-for-sale > p").should("be.visible");
+      } else {
+        cy.get("#product-quantity").invoke("text").should("be.greaterThan", 0);
+
+        cy.contains("ADD TO BAG").should("be.visible");
+        cy.contains("BUY NOW").should("be.visible");
+      }
+    });
   });
 });
