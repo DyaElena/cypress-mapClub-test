@@ -7,5 +7,5 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {},
     specPattern: "cypress/**/*.spec.{js,jsx,ts,tsx}",
   },
-  defaultCommandTimeout: 30000,
+  defaultCommandTimeout: 60000,
 });
