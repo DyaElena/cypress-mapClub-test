@@ -74,4 +74,40 @@ describe("Place order tests", () => {
           });
       });
   });
+
+  // it.only('verify add to favorite', ()=> {
+  //   cy.get('[title="FOR HER"]').click();
+  //   cy.get("h4").contains("Clothing").click();
+
+  //   cy.contains("Double Breasted Trench Coat").click();
+  //   cy.contains('Add to Wishlist').click();
+  //   cy.get('[title="Wishlist"]').click();
+
+  // })
+
+  it.only("verify selection of different colors of a product", () => {
+    cy.get('[title="FOR HER"]').click();
+    cy.get("h4").contains("Clothing").click();
+    cy.contains("Double Breasted Trench Coat").click();
+    //green
+    cy.get('[title="Soft Khaki"]')
+      .click()
+      .then(() => {
+        cy.get(".size-con").find("span").should("contain", "Soft Khaki");
+      });
+
+    // black
+    cy.get('[title="Black"]')
+      .click()
+      .then(() => {
+        cy.get(".size-con").find("span").should("contain", "Black");
+      });
+
+    // navi
+    cy.get('[title="Navy"]')
+      .click()
+      .then(() => {
+        cy.get(".size-con").find("span").should("contain", "Navi");
+      });
+  });
 });
