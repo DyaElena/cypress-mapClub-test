@@ -1,11 +1,11 @@
 describe("Product tests", () => {
-  beforeEach("Login", () => {
+  beforeEach("open website and select cloth 'for her'", () => {
     cy.visit("https://www.mapclub.com/forher/clothing");
+    cy.get('[title="FOR HER"]').click();
+    cy.get("h4").contains("Clothing").click();
   });
 
   it("verify add to cart without login", () => {
-    cy.get('[title="FOR HER"]').click();
-    cy.get("h4").contains("Clothing").click();
     // add item 1 to the cart
     cy.contains("Double Breasted Trench Coat").click();
     cy.get('[title="UK 8"]').click();
@@ -76,9 +76,6 @@ describe("Product tests", () => {
   });
 
   // it.only('verify add to favourite', ()=> {
-  //   cy.get('[title="FOR HER"]').click();
-  //   cy.get("h4").contains("Clothing").click();
-
   //   cy.contains("Double Breasted Trench Coat").click();
   //   cy.contains('Add to Wishlist').click();
   //   cy.get('[title="Wishlist"]').click();
@@ -86,8 +83,6 @@ describe("Product tests", () => {
   // })
 
   it("verify selection of different colors of a product", () => {
-    cy.get('[title="FOR HER"]').click();
-    cy.get("h4").contains("Clothing").click();
     cy.contains("Double Breasted Trench Coat").click();
     //green
     cy.get('[title="Soft Khaki"]')
@@ -112,8 +107,6 @@ describe("Product tests", () => {
   });
 
   it("verify available and unavailable sizes", () => {
-    cy.get('[title="FOR HER"]').click();
-    cy.get("h4").contains("Clothing").click();
     cy.contains("Double Breasted Trench Coat").click();
     cy.get("#pcSizeList")
       .find("li")
@@ -135,8 +128,6 @@ describe("Product tests", () => {
   });
 
   it.only("verify open and close product description", () => {
-    cy.get('[title="FOR HER"]').click();
-    cy.get("h4").contains("Clothing").click();
     cy.contains("Double Breasted Trench Coat").click();
 
     cy.get(".commodity-attribute")
