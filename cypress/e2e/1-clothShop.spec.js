@@ -75,7 +75,7 @@ describe("Product tests", () => {
       });
   });
 
-  // it.only('verify add to favorite', ()=> {
+  // it.only('verify add to favourite', ()=> {
   //   cy.get('[title="FOR HER"]').click();
   //   cy.get("h4").contains("Clothing").click();
 
@@ -111,7 +111,7 @@ describe("Product tests", () => {
       });
   });
 
-  it.only("verify available and unavailable sizes", () => {
+  it("verify available and unavailable sizes", () => {
     cy.get('[title="FOR HER"]').click();
     cy.get("h4").contains("Clothing").click();
     cy.contains("Double Breasted Trench Coat").click();
@@ -131,6 +131,24 @@ describe("Product tests", () => {
             cy.contains("BUY NOW").should("be.visible");
           }
         });
+      });
+  });
+
+  it.only("verify open and close product description", () => {
+    cy.get('[title="FOR HER"]').click();
+    cy.get("h4").contains("Clothing").click();
+    cy.contains("Double Breasted Trench Coat").click();
+
+    cy.get(".commodity-attribute")
+      .find(".commodity-tit")
+      .find("i")
+      .each(($icon, index) => {
+        cy.wrap($icon).click();
+        cy.wrap($icon).should("have.class", "icon icon-fold-b");
+        cy.get(".commodity-attribute")
+          .find(".commodity-con")
+          .eq(index)
+          .should("have.class", "commodity-con-active");
       });
   });
 });
