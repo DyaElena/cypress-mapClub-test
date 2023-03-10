@@ -1,4 +1,4 @@
-describe("Place order tests", () => {
+describe("Product tests", () => {
   beforeEach("Login", () => {
     cy.visit("https://www.mapclub.com/forher/clothing");
   });
@@ -115,17 +115,22 @@ describe("Place order tests", () => {
     cy.get('[title="FOR HER"]').click();
     cy.get("h4").contains("Clothing").click();
     cy.contains("Double Breasted Trench Coat").click();
-    cy.get("#pcSizeList").each((index, size) => {
-      if (Cypress.$(size).hasClass("is-disabled")) {
-        cy.get("#product-quantity").invoke("text").should("be.eq", 0);
-
-        cy.get(".not-for-sale > p").should("be.visible");
-      } else {
-        cy.get("#product-quantity").invoke("text").should("be.greaterThan", 0);
-
-        cy.contains("ADD TO BAG").should("be.visible");
-        cy.contains("BUY NOW").should("be.visible");
-      }
-    });
+    cy.get("#pcSizeList")
+      .find("li")
+      .then(($sizes) => {
+        $sizes.each((index, size) => {
+          if (Cypress.$(size).hasClass("is-disabled")) {
+            cy.wrap(size).click();
+            cy.get("#product-quantity").invoke("text").should("be.eq", "0");
+            cy.get(".not-for-sale > p").should("be.visible");
+          }
+          if (!Cypress.$(size).hasClass("is-disabled")) {
+            cy.wrap(size).click();
+            cy.get("#product-quantity").invoke("text").should("be.eq", "1");
+            cy.contains("ADD TO BAG").should("be.visible");
+            cy.contains("BUY NOW").should("be.visible");
+          }
+        });
+      });
   });
 });
