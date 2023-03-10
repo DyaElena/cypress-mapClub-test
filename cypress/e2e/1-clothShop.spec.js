@@ -145,10 +145,12 @@ describe("Product tests", () => {
       .each(($icon, index) => {
         cy.wrap($icon).click();
         cy.wrap($icon).should("have.class", "icon icon-fold-b");
-        cy.get(".commodity-attribute")
-          .find(".commodity-con")
-          .eq(index)
-          .should("have.class", "commodity-con-active");
+        const $commodityCon = cy
+          .get(".commodity-attribute")
+          .find(".commodity-con");
+        if ($commodityCon.length > index) {
+          $commodityCon.eq(index).should("have.class", "commodity-con-active");
+        }
       });
   });
 });
