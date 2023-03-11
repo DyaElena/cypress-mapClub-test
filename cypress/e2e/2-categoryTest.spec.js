@@ -10,12 +10,15 @@ describe("Product tests", () => {
       .find(".ps--active-y")
       .find("ul")
       .find("li")
-      .then((li) => {
-        console.log(li);
-        const brand = cy.wrap(li).invoke("text");
-        cy.contains(brand).click({ force: true });
-
-        // cy.get(".goods-introudce").find("a").should("contain", brand);
+      .each((li, index) => {
+        if (index !== 0) {
+          const brand = li.text().trim();
+          cy.contains(brand).click({ force: true });
+          cy.get(".goods-introudce").find("a").should("contain", brand);
+          cy.contains(brand).click({ force: true });
+        } else {
+          return;
+        }
       });
   });
 });
