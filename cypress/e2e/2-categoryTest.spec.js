@@ -22,3 +22,25 @@ describe("Product tests", () => {
       });
   });
 });
+
+it.only("verify price filter", () => {
+  cy.visit(
+    "https://www.mapclub.com/cat/women/clothing-CA2009270917?categoryCodes=CA2009270917"
+  );
+  cy.get("#min").type("2000000", { force: true });
+  cy.get("#max")
+    .type("2100000", { force: true })
+    .then(() => {
+      cy.wait(1000);
+      cy.get(".goods-price").each(($div, index, $list) => {
+        cy.wrap($div).find("span").invoke("text").as("priceRp");
+
+        cy.get("@priceRp").each((price) => {
+          console.log(price);
+          const priceNum = price.substring(2).removeAll(".", "");
+          cy.wrap(priceNum).should("be.greaterThan", "2000000");
+          cy.wrap(priceNum).should("be.lessThan", "2100000");
+        });
+      });
+    });
+});
