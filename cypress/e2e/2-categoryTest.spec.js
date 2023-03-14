@@ -27,20 +27,36 @@ it.only("verify price filter", () => {
   cy.visit(
     "https://www.mapclub.com/cat/women/clothing-CA2009270917?categoryCodes=CA2009270917"
   );
-  cy.get("#min").type("2000000", { force: true });
-  cy.get("#max")
-    .type("2100000", { force: true })
-    .then(() => {
-      cy.wait(1000);
-      cy.get(".goods-price").each(($div, index, $list) => {
-        cy.wrap($div).find("span").invoke("text").as("priceRp");
 
-        cy.get("@priceRp").each((price) => {
-          console.log(price);
-          const priceNum = price.substring(2).removeAll(".", "");
-          cy.wrap(priceNum).should("be.greaterThan", "2000000");
-          cy.wrap(priceNum).should("be.lessThan", "2100000");
+  cy.get("#min")
+    .clear({ force: true })
+    .clear({ force: true })
+    .type("2000000", { force: true });
+  //.as("min");
+
+  // cy.get("@min")
+  //   .invoke("text")
+  //   .then((price) => {
+  //     console.log(price);
+  //   });
+
+  cy.get("#max")
+    .clear({ force: true })
+    .clear({ force: true })
+    .type("2100000", { force: true });
+
+  const filterByPrice = async () => {
+    await cy.get(".goods-price").each(($div) => {
+      cy.wrap($div)
+        .find("span")
+        .invoke("text")
+        .should((price) => {
+          const priceNum = +price.slice(2).replaceAll(".", "");
+          expect(priceNum).to.be.greaterThan(2000000);
+          expect(priceNum).to.be.lessThan(2100000);
         });
-      });
     });
+  };
+
+  filterByPrice();
 });
